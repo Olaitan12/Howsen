@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart'; 
 import 'bottom-bar.dart';
-import 'categories-navigator.dart';
 import 'details.dart';
 
 void main() => runApp(MyApp());
@@ -24,7 +25,198 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(),
-      home: MyHomePage(title: 'Howsen'),
+      home: SplashScreen(),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 3), () => Navigator.push(
+      context, MaterialPageRoute(builder: (context) => LoginScreen())));
+  }
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.lightBlue,
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                flex: 2,
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircleAvatar(backgroundColor: Colors.white,
+                      radius: 50.0,
+                      child: Icon(Icons.home,
+                      color: Colors.lightBlueAccent,
+                      size: 50.0
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                      ),
+                      Text("HOWSEN",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24.0,
+                      )),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CircularProgressIndicator(),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20.0),
+                    ),
+                    Text("Trust us in giving you right home choice...",
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
+                      color: Colors.white,
+                    )),
+                  ],
+                ),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+    TextStyle style = TextStyle(fontFamily: 'Schyler', fontSize: 20.0);
+
+  @override
+  Widget build(BuildContext context) {
+
+    final emailField = TextField(
+      obscureText: false,
+      style: style,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: "Email",
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+      ),
+    );
+
+    final passwordField = TextField(
+      obscureText: true,
+      style: style,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: "Password",
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+      ),
+    );
+
+    final loginButton = Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(30.0),
+      color: Colors.black,
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyHomePage()),
+            );
+        },
+        child: Text("Login",
+        textAlign: TextAlign.center,
+        style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    final signupButton = Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(30.0),
+      color: Colors.black,
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => MyHomePage()),
+          //   );
+        },
+        child: Text("Signup",
+        textAlign: TextAlign.center,
+        style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    return Scaffold(
+      body: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(36.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: 155.0,
+                child: Image.asset("assets/images/50-506242_custom-new-home-builders-southern-minnesota-krause-property.png",
+                fit: BoxFit.contain,
+                ),
+              ),
+              SizedBox(
+                height: 45.0
+              ),
+              emailField,
+              SizedBox(
+                height: 25.0),
+              passwordField,
+              SizedBox(
+                height: 35.0
+              ),
+              loginButton,
+              SizedBox(
+                height: 15.0,
+              ),
+              signupButton,
+              SizedBox(
+                height: 15.0,
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
