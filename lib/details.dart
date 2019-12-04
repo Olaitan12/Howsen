@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart'; 
 import 'bottom-bar.dart';
 
 Color color = Color(0xff59c2ff);
@@ -83,37 +84,39 @@ class NewsAppConceptDetails extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 20),
-                  ListTile(
-                    contentPadding: EdgeInsets.only(left: 0),
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.grey,
-                      backgroundImage: new NetworkImage(
-                          "https://images.pexels.com/photos/697509/pexels-photo-697509.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"),
-                    ),
-                    title: Text("by Howsen"),
-                    subtitle: Text("Invested: N500,000"),
-                    isThreeLine: true,
-
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Text(
-                        "Investing Rate",
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                  ),
-                  new Container(
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          color: Colors.white,
-                          child: Text("7.25%",
+                  
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                           Text(" 7.25% \n APR",
                           style: TextStyle(fontSize: 16.0, color: Colors.black,)),
-                        )
-                      ],
-                    ),
-                  ),
+                           Text(" 51.25% \n LTV",
+                          style: TextStyle(fontSize: 16.0, color: Colors.black,)),
+                           Text(" 19mo \n Period",
+                          style: TextStyle(fontSize: 16.0, color: Colors.black,)),
+                          ],
+                        ),
+                 
+                   Padding(
+      padding: EdgeInsets.only(
+        bottom: 10,
+      ),
+      child: new Column(
+        children: <Widget>[ 
+          SizedBox(height: 20),
+         new LinearPercentIndicator(
+                width:  MediaQuery.of(context).size.width - 40,
+                lineHeight: 14.0,
+                percent: .9,
+                backgroundColor: Colors.grey,
+                progressColor: Colors.blue,
+              ),
+ SizedBox(height: 20),
+          Text('80% funded by 138 investors \$125k left')
+        ],
+      ),
+    ),
+                 
                   SizedBox(height: 20),
                 ],
               ),

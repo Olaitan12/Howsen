@@ -25,65 +25,41 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context){
     return Container(
+      
       height: 70,
-      child: Stack(
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: 25,
+          right: 25,
+        ),
+        child:  Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Positioned(
-            bottom: 0,
-            child: Container(
-              height: 60,
-              width: MediaQuery.of(context).size.width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  _getBottomBarItem(
-                    context: context,
-                    index: 0,
-                    icon: Icons.home,
-                  ),
-                  _getBottomBarItem(
-                    context: context,
-                    index: 1,
-                    icon: Icons.search,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 5
-                  ),
-                  _getBottomBarItem(
-                    context: context,
-                    index: 2,
-                    icon: Icons.notifications,
-                  ),
-                  _getBottomBarItem(
-                    context: context,
-                    index: 3,
-                    icon: Icons.verified_user,
-                  ),
-                ],
-              ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: 15,
             ),
-          ),
-          Positioned(
-            bottom: 10,
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              alignment: Alignment.center,
-              child: FloatingActionButton(
-                heroTag: 'btn',
-                elevation: 2,
-                highlightElevation: 5,
-                backgroundColor: color,
-                child: Icon(
-                  Icons.add,
-                  size: 38,
-                ),
-                onPressed: () {},
-              ),
-            ),
-          ),
+            child:
+          Column(
+            children: <Widget>[
+              Text('Total Volumn', style: new TextStyle(
+                                         fontWeight: FontWeight.w700,fontSize: 15,
+                                       ),),
+              Text('1,506,777',style: new TextStyle(
+                                         fontWeight: FontWeight.w700,fontSize: 15,
+                                       )),
+            ],
+          ),),
+          RaisedButton(
+            onPressed: ()=>print('trade'),
+            color: Colors.green,
+            child: Text('Trade',style: new TextStyle(
+                                         color: Colors.white
+                                       )),
+          )
         ],
-      ),
+      ) ,
+      )
     );
   }
 

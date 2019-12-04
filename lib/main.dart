@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart'; 
 import 'bottom-bar.dart';
 import 'categories-navigator.dart';
 import 'details.dart';
@@ -17,12 +18,13 @@ String img2 =
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var drawerOptions = <Widget>[];
+
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      theme: ThemeData(),
+      home: MyHomePage(title: 'Howsen'),
     );
   }
 }
@@ -35,125 +37,201 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+Widget progress({progressor, value, type}) => Padding(
+      padding: EdgeInsets.only(
+        bottom: 10,
+      ),
+      child: new Row(
+        children: <Widget>[
+           SizedBox(width: 10,),
+         new LinearPercentIndicator(
+                width: 250.0,
+                lineHeight: 14.0,
+                percent: progressor,
+                backgroundColor: Colors.grey,
+                progressColor: Colors.blue,
+              ),
+ SizedBox(width: 10,),
+          Text('$value% $type')
+        ],
+      ),
+    );
 
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double height = MediaQuery.of(context).size.height -158;
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        
+        title: new Text("Analyst Report", style: TextStyle(color: Colors.black),),
+      ),
+      drawer: new Drawer(
+        child: new Column(
           children: <Widget>[
-            Icon(
-              Icons.menu,
-              color: Colors.black,
-              size: 32,
-            ),
-            Icon(
-              Icons.search,
-              color: Colors.black,
-              size: 32,
-            ),
+            new UserAccountsDrawerHeader(
+                accountName: new Text("John Doe"), accountEmail: null),
           ],
         ),
       ),
-      body: Container(
-        width: width,
-        height: height,
-        // child: SingleChildScrollView(
-          child: Stack(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  SizedBox(height: 10),
-                  CategoriesNavigator(
-                    categories: [
-                      "Latest",
-                      "Decorative",
-                      "Music",
-                      "Style",
-                    ],
-                    onChangeActiveTab: (int index) {},
-                  ),
-                  SizedBox(height: 10),
-                  Flexible(
-                    flex: 1,
-                    child: LayoutBuilder(
-                      builder: (BuildContext c, BoxConstraints constraints) {
-                        return ListView(
-                          padding: const EdgeInsets.only(left: 20),
-                          scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            _buildItem(width, constraints),
-                            SizedBox(width: 15),
-                            _buildItem(width, constraints),
-                            SizedBox(width: 15),
-                            _buildItem(width, constraints),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                  // SizedBox(height: 10),
-                  Flexible(
-                    flex: 1,
-                    child: LayoutBuilder(
-                      builder: (BuildContext c, BoxConstraints constraints) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "Recommend",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20,
-                              ),
-                            ),
-                            SizedBox(height: 15),
-                            Expanded(
-                              child: Container(
-                                height: constraints.maxHeight,
-                                width: constraints.maxWidth,
-                                child: ListView(
-                                  children: <Widget>[
-                                    _buildRecommendItem(constraints),
-                                    SizedBox(height: 10),
-                                    _buildRecommendItem(constraints),
-                                    SizedBox(height: 10),
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    }),
-                  ),
-                  SizedBox(height: 60),
-                ],
-              ),
-              Positioned(
-                bottom: 0,
-                width: width,
-                height: 70,
-                child: BottomBar(
-                  onChangeActiveTab: (int index) {},
+      body: Column(
+        children: [
+          Row(
+            children: <Widget>[ 
+              Container(
+                padding: EdgeInsets.only(left: 20),
+                child: Center(
+                  child: Text('50%',style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
                 ),
+              ),
+              Expanded(
+                child: Container(
+                  
+                    child: Column(
+                  children: <Widget>[
+                    progress(progressor: .8, value: 80, type: 'Buy'),
+                    progress(progressor: .4, value: 40, type: 'Hold'),
+                    progress(progressor: .7, value: 70, type: 'Sell'),
+                  ],
+                )),
               ),
             ],
           ),
-        // )
+          Container(
+            width: width,
+            height: height,
+            // child: SingleChildScrollView(
+            child: Stack(
+              children: <Widget>[ 
+                Column(
+                  children: <Widget>[
+                    SizedBox(height: 10),
+                    Flexible(
+                      flex: 1,
+                      child: LayoutBuilder(
+                        builder: (BuildContext c, BoxConstraints constraints) {
+                          return ListView(
+                            padding: const EdgeInsets.only(left: 20),
+                            scrollDirection: Axis.horizontal,
+                            children: <Widget>[
+                              _buildItem(width, 'Buy Rating',  'PrimeView Property will retain its dominant position based on its strong rent volumn', constraints),
+                              
+                              _buildItem(width, 'Sell Rating',  'PrimeView Property will retain its dominant position based on its strong rent volumn', constraints),
+                              
+                              _buildItem(width, 'Hold Rating',  'PrimeView Property will retain its dominant position based on its strong rent volumn', constraints),
+                              
+                             
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                    // SizedBox(height: 10),
+                    Flexible(
+                      flex: 1,
+                      child: LayoutBuilder(builder:
+                          (BuildContext c, BoxConstraints constraints) {
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "Related News",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15,
+                                ),
+                              ), 
+                              Expanded(
+                                child: Container(
+                                  height: constraints.maxHeight,
+                                  width: constraints.maxWidth,
+                                  child: new Column( 
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                       SizedBox(height: 10),
+                                      Row(
+                                        children: <Widget>[
+                                          Text('Business day'),
+                                       Text('1 am ago'),
+                                        ],
+                                      ) ,
+                                       SizedBox(height: 15), 
+                                       Text('Properties around ikeja soar by 18%', style: new TextStyle(
+                                         fontWeight: FontWeight.w700,fontSize: 15,
+                                       ),),
+                                       Text('Buy or Sell', style: new TextStyle(
+                                         fontWeight: FontWeight.w700,fontSize: 15,
+                                       ),), 
+                                    ],
+                                      
+                                  )
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }),
+                    ), 
+                    Flexible(
+                      flex: 2,
+                      child: LayoutBuilder(builder:
+                          (BuildContext c, BoxConstraints constraints) {
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "Recommend",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              SizedBox(height: 15),
+                              Expanded(
+                                child: Container(
+                                  height: constraints.maxHeight,
+                                  width: constraints.maxWidth,
+                                  child: ListView(
+                                    children: <Widget>[
+                                      _buildRecommendItem(constraints),
+                                      SizedBox(height: 10), 
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }),
+                    ), 
+                  ],
+                ),
+                Positioned(
+                  bottom: 0,
+                  width: width,
+                  height: 70,
+                  child: BottomBar(
+                    onChangeActiveTab: (int index) {},
+                  ),
+                ),
+              ],
+            ),
+            // )
+          ),
+        ],
       ),
     );
   }
@@ -161,7 +239,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildRecommendItem(BoxConstraints constraints) {
     double height = constraints.maxHeight * .50;
 
-    return Container(
+    return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => NewsAppConceptDetails()),
+            );
+          },
+          child: Container(
       height: height,
       width: constraints.maxWidth,
       child: Stack(
@@ -268,12 +352,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
+          ), 
     );
   }
 
-  Container _buildItem(double width, BoxConstraints constraints) {
+  Widget _buildItem(double width, String type, String long, BoxConstraints constraints) {
     return Container(
-      width: width - 40,
+      width: width - 50,
+      height: 100,
       child: Builder(builder: (context) {
         return GestureDetector(
           onTap: () {
@@ -283,25 +369,7 @@ class _MyHomePageState extends State<MyHomePage> {
           },
           child: Stack(
             children: <Widget>[
-              Positioned(
-                top: 0,
-                width: width - 45,
-                height: constraints.maxHeight * .65,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(img),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                width: width - 45,
-                height: constraints.maxHeight * .55,
-                child: Padding(
+               Padding(
                   padding: const EdgeInsets.all(15),
                   child: Stack(
                     children: <Widget>[
@@ -311,7 +379,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           borderRadius: BorderRadius.circular(5),
                           border: Border.all(
                             color: Colors.grey,
-                            width: 0.5,
+                            width: 1.5,
                           ),
                           //boxShadow: shadow1,
                         ),
@@ -320,63 +388,33 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: <Widget>[
                             Expanded(
                               child: ListTile(
-                                leading: CircleAvatar(
-                                  backgroundColor: Colors.grey,
-                                  backgroundImage: new NetworkImage(avatar),
-                                ),
-                                title: RichText(
-                                  text: new TextSpan(
-                                    text: 'by ',
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                    ),
-                                    children: <TextSpan>[
-                                      new TextSpan(
-                                        text: 'Howsen',
+                                
+                                title: Text(
+                                         '$type',
                                         style: new TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w600,
                                         ),
-                                      ),
-                                    ],
+                                      
                                   ),
-                                ),
-                                subtitle: Text(
-                                  "January 23, 2019",
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ),
-                            ),
+                                
+                                 
+                            ),),
                             Expanded(
                               child: ListTile(
-                                title: Text(
-                                  "Beautiful Houses Around You",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                    "Where Dreams Come Home"),
+                                 
+                                subtitle: Text("$long"),
                               ),
                             ),
                             SizedBox(height: 10),
                           ],
                         ),
                       ),
-                      Positioned(
-                        right: 10,
-                        top: 10,
-                        child: Icon(
-                          Icons.favorite,
-                          color: Color(0xffff8993),
-                        ),
-                      ),
+                      
                     ],
                   ),
                 ),
-              ),
+             
             ],
           ),
         );
